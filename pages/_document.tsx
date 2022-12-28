@@ -1,8 +1,12 @@
+
 import { Html, Head, Main, NextScript } from 'next/document'
+import { useContext } from 'react'
+import { Theme } from '../src/context/theme'
 
 export default function Document() {
+
   return (
-    <Html lang="en">
+    <Html>
       <Head />
       <body>
         <Main />
