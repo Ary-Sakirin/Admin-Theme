@@ -1,3 +1,4 @@
+import { gql, useQuery } from "@apollo/client";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 import { faUser, faChartSimple, faArrowTrendUp, faDollarSign, faChevronUp, faFileExport, faEllipsisVertical, faNoteSticky, faTableList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,7 +36,159 @@ const items = [
     }
 ]
 
+const QUERY = gql`
+    query landpads{
+        landpads {
+            id
+            full_name
+            location {
+              region
+            }
+            status
+            landing_type
+        }
+    }
+    
+    
+`
+const QUERY_PAYLOAD = gql`
+    query payloads{
+        payloads(limit: 4) {
+            id
+            customers
+            nationality
+            manufacturer
+            norad_id
+            orbit
+        }
+    }
+`
+
+
 export default function PageUserList() {
+
+    function LandpadsList() {
+        const { data, loading } = useQuery(QUERY)
+        if (!data || loading) {
+            return <>Loading...</>
+        }
+
+        return (
+            <>
+                <Table responsive className="">
+                    <thead className="table-darkmode">
+                        <tr className="tr-border">
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Manufacturers
+                            </th>
+                            <th>
+                                Twitter
+                            </th>
+                            <th>
+                                Website
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody className="table-darkmode">
+                        {
+                            data.landpads.map((item: any) => {
+                                return (
+                                    <>
+                                        <tr className="tr-border">
+                                            <th scope="row">
+                                                {item.id}
+                                            </th>
+                                            <td>
+                                                {item.full_name}
+                                            </td>
+                                            <td>
+                                                {item.location.region}
+                                            </td>
+                                            <td>
+                                                {item.status}
+                                            </td>
+                                            <td>
+                                                {item.landing_type}
+                                            </td>
+                                        </tr>
+                                    </>
+                                );
+
+                            })
+                        }
+                    </tbody>
+                </Table>
+            </>);
+    }
+    function PayloadList() {
+        const { data, loading } = useQuery(QUERY_PAYLOAD)
+        if (!data || loading) {
+            return <>Loading...</>
+        }
+        return <>
+            <Table responsive className="">
+                <thead className="table-darkmode">
+                    <tr className="tr-border">
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Customers
+                        </th>
+                        <th>
+                            Nationality
+                        </th>
+                        <th>
+                            Manufacturer
+                        </th>
+                        <th>
+                            Norad_id
+                        </th>
+                        <th>
+                            Orbit
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="table-darkmode">
+                    {
+                        data.payloads.map((item: any) => {
+                            return (
+                                <>
+                                    <tr className="tr-border">
+                                        <th scope="row">
+                                            {item.id}
+                                        </th>
+                                        <td>
+                                            {item.customers}
+                                        </td>
+                                        <td>
+                                            {item.nationality}
+                                        </td>
+                                        <td>
+                                            {item.manufacturer}
+                                        </td>
+                                        <td>
+                                            {item.norad_id}
+                                        </td>
+                                        <td>
+                                            {item.orbit}
+                                        </td>
+                                    </tr>
+                                </>
+                            );
+
+                        })
+                    }
+                </tbody>
+            </Table>
+        </>
+    }
     return (
         <>
             <div className="container mt-4">
@@ -162,150 +315,152 @@ export default function PageUserList() {
                             </div>
                             <hr className="v-divider" aria-orientation="horizontal" role="separator"></hr>
                             <div className="card-text-1">
-                                <Table responsive className="">
-                                    <thead className="table-darkmode">
-                                        <tr className="tr-border">
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Table heading
-                                            </th>
-                                            <th>
-                                                Table heading
-                                            </th>
-                                            <th>
-                                                Table heading
-                                            </th>
-                                            <th>
-                                                Table heading
-                                            </th>
-                                            <th>
-                                                Table heading
-                                            </th>
-                                            <th>
-                                                Table heading
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="table-darkmode">
-                                        <tr className="tr-border">
-                                            <th scope="row">
-                                                1
-                                            </th>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                        </tr>
-                                        <tr className="tr-border">
-                                            <th scope="row">
-                                                2
-                                            </th>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                        </tr>
-                                        <tr className="tr-border">
-                                            <th scope="row">
-                                                3
-                                            </th>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                        </tr>
-                                        <tr className="tr-border">
-                                            <th scope="row">
-                                                4
-                                            </th>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                        </tr>
-                                        <tr className="tr-border">
-                                            <th scope="row">
-                                                5
-                                            </th>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                            <td>
-                                                Table cell
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
+                                <LandpadsList/>
+                            </div>
+                            <div className="card-text-1 d-flex alert align-items-baseline justify-content-between">
+                                <span className="text-sm text-disabled">Showing 1 to 10 of 50 entries</span>
+                                <nav aria-label="Page navigation example">
+                                    <ul className="pagination ">
+                                        <li className="page-item">
+                                            <a className="page-link page-item-dark" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li className="page-item active"><a className="page-link " href="#">1</a></li>
+                                        <li className="page-item"><a className="page-link page-item-dark" href="#">2</a></li>
+                                        <li className="page-item"><a className="page-link page-item-dark" href="#">3</a></li>
+                                        <li className="page-item">
+                                            <a className="page-link page-item-dark" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col col-12 mt-4">
+                        <div className="card border-0 card-bg-shadow card-darkmode">
+                            <div className="card-item">
+                                <div className="card-item__content">
+                                    <div className="card-title">Search Filter</div>
+                                </div>
+                            </div>
+                            <div className="card-text-1">
+                                <div className="row">
+                                    <div className="col-sm-4 col-12">
+                                        <FormGroup>
+                                            <Input
+                                                name="select"
+                                                type="select"
+                                                placeholder="Select Role"
+                                                className="input-darkmode"
+                                            >
+                                                <option>
+                                                    Admin
+                                                </option>
+                                                <option>
+                                                    Author
+                                                </option>
+                                                <option>
+                                                    Editor
+                                                </option>
+                                                <option>
+                                                    Maintainer
+                                                </option>
+                                                <option>
+                                                    Subscriber
+                                                </option>
+                                            </Input>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="col-sm-4 col-12">
+                                        <FormGroup>
+                                            <Input
+                                                name="select"
+                                                type="select"
+                                                placeholder="Select"
+                                                className="input-darkmode"
+                                            >
+                                                <option>
+                                                    Admin
+                                                </option>
+                                                <option>
+                                                    Author
+                                                </option>
+                                                <option>
+                                                    Editor
+                                                </option>
+                                                <option>
+                                                    Maintainer
+                                                </option>
+                                                <option>
+                                                    Subscriber
+                                                </option>
+                                            </Input>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="col-sm-4 col-12">
+                                        <FormGroup>
+                                            <Input
+                                                name="select"
+                                                type="select"
+                                                placeholder="Select"
+                                                className="input-darkmode"
+                                            >
+                                                <option>
+                                                    Admin
+                                                </option>
+                                                <option>
+                                                    Author
+                                                </option>
+                                                <option>
+                                                    Editor
+                                                </option>
+                                                <option>
+                                                    Maintainer
+                                                </option>
+                                                <option>
+                                                    Subscriber
+                                                </option>
+                                            </Input>
+                                        </FormGroup>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr className="v-divider" aria-orientation="horizontal" role="separator"></hr>
+                            <div className="card-text-1 d-flex flex-wrap gap-4">
+                                <div className="">
+                                    <Button outline>
+                                        <FontAwesomeIcon icon={faFileExport} /> Export
+                                    </Button>
+                                </div>
+                                <div className="flex-grow-1"></div>
+                                <div className="d-flex">
+                                    <div className="mx-3">
+                                        <>
+                                            <Input
+                                                id="search"
+                                                name="search"
+                                                placeholder="Search User"
+                                                type="search"
+                                                className="input-darkmode"
+                                            />
+                                        </>
+                                    </div>
+                                    <div>
+                                        <Button
+                                            className="fw-bold"
+                                            color="primary"
+                                        >
+                                            ADD USER
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr className="v-divider" aria-orientation="horizontal" role="separator"></hr>
+                            <div className="card-text-1">
+                                <PayloadList />
                             </div>
                             <div className="card-text-1 d-flex alert align-items-baseline justify-content-between">
                                 <span className="text-sm text-disabled">Showing 1 to 10 of 50 entries</span>
@@ -440,7 +595,7 @@ export default function PageUserList() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-12 col-12" style={{height: "200px"}}></div>
+                    <div className="col-md-12 col-12" style={{ height: "200px" }}></div>
                 </div>
             </div>
         </>

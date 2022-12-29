@@ -6,6 +6,8 @@ import { Layout } from '../src/components/Layout';
 import { Theme, ThemeProps } from '../src/context/theme';
 import { useEffect, useState } from 'react';
 import HomeMenu from '../src/screens/home/HomeMenu';
+import { ApolloProvider } from '@apollo/client';
+import { client } from '../src/libs/apollo';
 export default function App({ Component, pageProps }: AppProps) {
 
   const [theme, setTheme] = useState<ThemeProps>({
@@ -23,13 +25,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Theme.Provider value={{ theme, setTheme }} >
-        <Layout>
-          <Navigation displayIcon={!theme.darkmode} />
-          <HomeMenu />
-          <Component {...pageProps} />
-        </Layout>
-      </Theme.Provider>
+      <ApolloProvider client={client}>
+        <Theme.Provider value={{ theme, setTheme }} >
+          <Layout>
+            <Navigation displayIcon={!theme.darkmode} />
+            <HomeMenu />
+            <Component {...pageProps} />
+          </Layout>
+        </Theme.Provider>
+      </ApolloProvider>
+
     </>
   );
 }

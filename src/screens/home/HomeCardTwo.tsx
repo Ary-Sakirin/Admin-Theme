@@ -396,23 +396,6 @@ export default function HomeCradTwo() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="col-sm-6 col-lg-12 col-12">
-                        <div className="card border-0 card-bg-shadow mt-3">
-                            <div className="card-item">
-                                <div className="card-item__content">
-                                    <div className="card-title">Sales by Countries</div>
-                                    <div className="card-subtitle text-disabled">Monthly Sales Overview</div>
-                                </div>
-
-                                <div className="card-item__append">
-                                    <FontAwesomeIcon icon={faEllipsisVertical} />
-                                </div>
-                            </div>
-                            <div className="card-text">
-
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </>
